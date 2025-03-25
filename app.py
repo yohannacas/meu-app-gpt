@@ -49,9 +49,9 @@ if st.button("Entrar"):
                     "timestamp": firestore.SERVER_TIMESTAMP
                 })
 
-                # 🔹 Mostrar mensagem e redirecionar
+                # 🔹 Mostrar mensagem e link para nova aba
                 st.success(f"✅ Login bem-sucedido! Bem-vindo, {email}")
-                st.markdown(f"""<meta http-equiv="refresh" content="2; url={GPT_URL}" />""", unsafe_allow_html=True)
+                st.markdown(f'[👉 Acesse o GPT agora]({GPT_URL}){{target="_blank"}}', unsafe_allow_html=True)
 
         except Exception as e:
             st.error(f"❌ Erro: {e}")
