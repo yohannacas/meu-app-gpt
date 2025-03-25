@@ -4,9 +4,11 @@ from firebase_admin import credentials, auth, firestore
 import time
 import webbrowser
 import uuid
+import json
 
 if not firebase_admin._apps:
-    cred = credentials.Certificate("firebase_credentials.json")
+    cred_dict = json.loads(st.secrets["firebase_credentials"])
+    cred = credentials.Certificate(cred_dict)
     firebase_admin.initialize_app(cred)
 
 # 🔹 Conectar ao Firestore
