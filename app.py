@@ -25,6 +25,10 @@ password = st.text_input("Senha", type="password")
 # 🔹 URL do GPT Customizado
 GPT_URL = "https://chatgpt.com/g/g-XGtq9fsBf-vincent-pro-view"
 
+# Após login bem-sucedido:
+st.success(f"✅ Login bem-sucedido! Bem-vindo, {user.email}")
+st.markdown(f"""<meta http-equiv="refresh" content="2; url={GPT_URL}" />""", unsafe_allow_html=True)
+
 # 🔹 Botão de login
 if st.button("Entrar"):
     if email and password:
