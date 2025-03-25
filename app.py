@@ -2,10 +2,10 @@ import streamlit as st
 import firebase_admin
 from firebase_admin import credentials, auth, firestore
 import time
-import webbrowser
 import uuid
 import json
 
+# 🔹 Inicializar Firebase com secrets do Streamlit
 if not firebase_admin._apps:
     cred_dict = json.loads(st.secrets["firebase_credentials"])
     cred = credentials.Certificate(cred_dict)
@@ -24,10 +24,6 @@ password = st.text_input("Senha", type="password")
 
 # 🔹 URL do GPT Customizado
 GPT_URL = "https://chatgpt.com/g/g-XGtq9fsBf-vincent-pro-view"
-
-# Após login bem-sucedido:
-st.success(f"✅ Login bem-sucedido! Bem-vindo, {user.email}")
-st.markdown(f"""<meta http-equiv="refresh" content="2; url={GPT_URL}" />""", unsafe_allow_html=True)
 
 # 🔹 Botão de login
 if st.button("Entrar"):
@@ -53,9 +49,9 @@ if st.button("Entrar"):
                     "timestamp": firestore.SERVER_TIMESTAMP
                 })
 
-                st.success(f"✅ Login bem-sucedido! Bem-vindo, {user.email}")
-                time.sleep(2)
-                webbrowser.open_new(GPT_URL)
+                # 🔹 Mostrar mensagem e redirecionar
+                st.success(f"✅ Login bem-sucedido! Bem-vindo, {email}")
+                st.markdown(f"""<meta http-equiv="refresh" content="2; url={GPT_URL}" />""", unsafe_allow_html=True)
 
         except Exception as e:
             st.error(f"❌ Erro: {e}")
