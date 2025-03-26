@@ -49,10 +49,13 @@ if st.button("Entrar"):
                     "timestamp": firestore.SERVER_TIMESTAMP
                 })
 
-                # 🔹 Mostrar mensagem e link para nova aba (HTML correto)
-                st.success(f"✅ Login bem-sucedido! Bem-vindo, {email}")
+                # ✅ Sinaliza que está autenticado
+                st.session_state["autenticado"] = True
+
+                # 🔹 Redireciona para a página protegida
+                st.success(f"✅ Login bem-sucedido! Redirecionando...")
                 st.markdown(
-                    f'<a href="{GPT_URL}" target="_blank">👉 Acesse o GPT agora</a>',
+                    f'<meta http-equiv="refresh" content="1; url=/gpt_redir" />',
                     unsafe_allow_html=True
                 )
 
@@ -71,7 +74,12 @@ if st.button("Sair"):
 
             # 🔹 Remover a sessão do Firestore
             db.collection("active_sessions").document(user_id).delete()
+
+            # 🔹 Limpar estado da sessão
+            st.session_state.pop("autenticado", None)
+
             st.success("🚪 Logout realizado com sucesso!")
 
         except Exception as e:
             st.error(f"❌ Erro ao sair: {e}")
+
