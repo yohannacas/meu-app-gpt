@@ -49,12 +49,12 @@ if st.button("Entrar"):
                     "timestamp": firestore.SERVER_TIMESTAMP
                 })
 
-                # ✅ Sinaliza que está autenticado
+                # ✅ Salvar estado da sessão local
                 st.session_state["autenticado"] = True
                 st.session_state["email"] = email
 
-                # 🔹 Redireciona para a página protegida
-                st.success(f"✅ Login bem-sucedido! Redirecionando...")
+                # 🔹 Redirecionar para página segura
+                st.success("✅ Login bem-sucedido! Redirecionando...")
                 st.markdown(
                     f'<meta http-equiv="refresh" content="1; url=/gpt_redir" />',
                     unsafe_allow_html=True
@@ -76,8 +76,9 @@ if st.button("Sair"):
             # 🔹 Remover a sessão do Firestore
             db.collection("active_sessions").document(user_id).delete()
 
-            # 🔹 Limpar estado da sessão
+            # 🔹 Limpar estado da sessão local
             st.session_state.pop("autenticado", None)
+            st.session_state.pop("email", None)
 
             st.success("🚪 Logout realizado com sucesso!")
 
