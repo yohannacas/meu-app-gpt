@@ -3,7 +3,7 @@ import firebase_admin
 from firebase_admin import credentials, auth, firestore
 import json
 
-# 🔹 Inicializar Firebase (caso ainda não esteja)
+# 🔹 Inicializar Firebase
 if not firebase_admin._apps:
     cred_dict = json.loads(st.secrets["firebase_credentials"])
     cred = credentials.Certificate(cred_dict)
@@ -11,22 +11,15 @@ if not firebase_admin._apps:
 
 db = firestore.client()
 
-# 🔹 Obter e-mail da sessão (se houver)
-email = st.session_state.get("email")
+# 🔎 Pegar todos os documentos da coleção de sessões ativas
+docs = db.collection("active_sessions").stream()
 
-# 🔹 Verificar se a sessão está ativa no Firestore
+# Se houver pelo menos uma sessão ativa, libera o acesso
 acesso_liberado = False
-if email:
-    try:
-        user = auth.get_user_by_email(email)
-        user_id = user.uid
-        doc = db.collection("active_sessions").document(user_id).get()
-        if doc.exists:
-            acesso_liberado = True
-    except:
-        acesso_liberado = False
+for doc in docs:
+    acesso_liberado = True
+    break
 
-# 🔹 Redirecionar ou bloquear
 GPT_URL = "https://chatgpt.com/g/g-XGtq9fsBf-vincent-pro-view"
 
 if acesso_liberado:
