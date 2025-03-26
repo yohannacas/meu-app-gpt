@@ -23,11 +23,14 @@ for doc in docs:
 GPT_URL = "https://chatgpt.com/g/g-XGtq9fsBf-vincent-pro-view"
 
 if acesso_liberado:
-    st.success("✅ Você está autenticado!")
+    st.success("✅ Login autorizado.")
+    st.markdown("### 👇 Acesse seu GPT na nova aba:")
     st.markdown(
-        f'[👉 Clique aqui para acessar o GPT]({GPT_URL}){{target="_blank"}}',
+        f'<a href="{GPT_URL}" target="_blank">🧠 👉 Abrir GPT Customizado</a>',
         unsafe_allow_html=True
     )
+    st.info("Caso o botão não funcione, copie e cole este link manualmente:")
+    st.code(GPT_URL)
 else:
     st.error("🚫 Acesso não autorizado.")
     st.markdown('[🔐 Voltar para o login](../)', unsafe_allow_html=True)
