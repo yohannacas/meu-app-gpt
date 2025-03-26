@@ -51,6 +51,7 @@ if st.button("Entrar"):
 
                 # ✅ Sinaliza que está autenticado
                 st.session_state["autenticado"] = True
+                st.session_state["email"] = email
 
                 # 🔹 Redireciona para a página protegida
                 st.success(f"✅ Login bem-sucedido! Redirecionando...")
